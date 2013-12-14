@@ -1,0 +1,205 @@
+\chapter{Task 1}
+\label{cha:task1}
+This task was solved by following the guide from \parencite{Koenighofer:2012:Online}. In this example three predicates are used:
+\begin{itemize}
+\item $p = (b == 0)$
+\item $q = (a < b)$
+\item $r = (a <= b + 1)$
+\end{itemize}
+This is the statement that should be abstracted: $a = a + b + 1;$
+
+As showed in \parencite{Koenighofer:2012:Online} the predicates are handled one after another. For each predicate the Hoare rule has to be applied to get the corresponding pre condition. This is the solution for predicate $p$:
+
+\begin{equation}
+\begin{array}{rl}
+\{ (b &== 0) \}\\
+a &= a + b + 1;\\
+\{p\} &= \{ (b == 0) \}
+\end{array}
+\end{equation}
+
+Because of the fact that only the value of $a$ is changed in the assignment predicate $p = (b == 0)$ is not modified. Pre and post conditions are the same. This result can be used to test all combinations of the boolean predicates $p$, $q$ and $r$. See table \ref{tab:predicate_p} for the solution.
+
+\begin{table}
+  \small
+  \begin{tabular}{ | c | c | c | c | c | c | }
+    \hline
+    Cases & \multicolumn{3}{ | c | }{ post conditions } & conclusion &  pre condition \\ \hline
+    & $p = (b == 0)$ & $q = (a < b)$ & $r = (a \le b + 1)$ & & $p' = (b == 0)$ \\ \hline
+
+    \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & $b \neq 0 \land $ & \multirow{4}{*}{0} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= b \neq 0 \land a > b + 1$ & \\ \hline
+
+    \multirow{4}{*}{2} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & $b \neq 0 \land $ & \multirow{4}{*}{0} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b \neq 0 \land b \le a \le b + 1$ & \\ \hline
+
+    \multirow{4}{*}{3} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & $b \neq 0 \land $ & \multirow{4}{*}{Chosen: 0} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= false$ & \\ \hline
+
+    \multirow{4}{*}{4} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & $b \neq 0 \land $ & \multirow{4}{*}{0} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b \neq 0 \land a < b$ & \\ \hline
+
+    \multirow{4}{*}{5} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & $b == 0 \land $ & \multirow{4}{*}{1} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= b == 0 \land a > b + 1$ & \\ \hline
+
+    \multirow{4}{*}{6} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & $b == 0 \land $ & \multirow{4}{*}{1} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b == 0 \land b \le a \le b + 1$ & \\ \hline
+
+    \multirow{4}{*}{7} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & $b == 0 \land $ & \multirow{4}{*}{Chosen: 1} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= false$ & \\ \hline
+
+    \multirow{4}{*}{8} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & $b == 0 \land $ & \multirow{4}{*}{1} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b == 0 \land a < b$ & \\ \hline
+  \end{tabular}
+  \caption{All combinations of $p$, $q$ and $r$ used for pre condition $p'$}
+  \label{tab:predicate_p}
+\end{table}
+
+The following equation solves the Hoare logic for the predicate $q$:
+\begin{equation}
+\begin{array}{rl}
+\{ (a + b + 1 < b) \} &= \{ (a + 1 < 0) \} = \{ (a < -1) \}\\
+a &= a + b + 1;\\
+\{q\} &= \{ (a < b) \}
+\end{array}
+\end{equation}
+Similar to table \ref{tab:predicate_p} all combinations of $p$, $q$ and $r$ have to be applied for pre condition $q' = (a < -1)$. Table \ref{tab:predicate_q} shows the solution.
+
+\begin{table}
+  \small
+  \begin{tabular}{ | c | c | c | c | c | c | }
+    \hline
+    Cases & \multicolumn{3}{ | c | }{ post conditions } & conclusion &  pre condition \\ \hline
+    & $p = (b == 0)$ & $q = (a < b)$ & $r = (a \le b + 1)$ & & $q' = (a < -1)$ \\ \hline
+
+    \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & $b \neq 0 \land $ & \multirow{4}{*}{*} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= b \neq 0 \land a > b + 1$ & \\ \hline
+
+    \multirow{4}{*}{2} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & $b \neq 0 \land $ & \multirow{4}{*}{*} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b \neq 0 \land b \le a \le b + 1$ & \\ \hline
+
+    \multirow{4}{*}{3} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & $b \neq 0 \land $ & \multirow{4}{*}{Chosen: *} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= false$ & \\ \hline
+
+    \multirow{4}{*}{4} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & $b \neq 0 \land $ & \multirow{4}{*}{*} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b \neq 0 \land a < b$ & \\ \hline
+
+    \multirow{4}{*}{5} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & $b == 0 \land $ & \multirow{4}{*}{0} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= b == 0 \land a > b + 1$ & \\ \hline
+
+    \multirow{4}{*}{6} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & $b == 0 \land $ & \multirow{4}{*}{0} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b == 0 \land b \le a \le b + 1$ & \\ \hline
+
+    \multirow{4}{*}{7} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & $b == 0 \land $ & \multirow{4}{*}{Chosen: 0} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= false$ & \\ \hline
+
+    \multirow{4}{*}{8} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & $b == 0 \land $ & \multirow{4}{*}{*} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b == 0 \land a < b$ & \\ \hline
+  \end{tabular}
+  \caption{All combinations of $p$, $q$ and $r$ used for pre condition $q'$}
+  \label{tab:predicate_q}
+\end{table}
+
+The same rules have to be applied to predicate $r$:
+\begin{equation}
+\begin{array}{rl}
+\{ (a + b + 1 \le b + 1) \} &= \{ (a \le 0) \} \\
+a &= a + b + 1;\\
+\{r\} &= \{ (a \le b + 1) \}
+\end{array}
+\end{equation}
+
+Again all combinations have to be applied to pre condition $r' = (a \le 0)$. Table \ref{tab:predicate_r} shows the solution.
+
+\begin{table}
+  \small
+  \begin{tabular}{ | c | c | c | c | c | c | }
+    \hline
+    Cases & \multicolumn{3}{ | c | }{ post conditions } & conclusion &  pre condition \\ \hline
+    & $p = (b == 0)$ & $q = (a < b)$ & $r = (a \le b + 1)$ & & $q' = (a \le 0)$ \\ \hline
+
+    \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & $b \neq 0 \land $ & \multirow{4}{*}{*} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= b \neq 0 \land a > b + 1$ & \\ \hline
+
+    \multirow{4}{*}{2} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & $b \neq 0 \land $ & \multirow{4}{*}{*} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b \neq 0 \land b \le a \le b + 1$ & \\ \hline
+
+    \multirow{4}{*}{3} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & $b \neq 0 \land $ & \multirow{4}{*}{Chosen: *} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= false$ & \\ \hline
+
+    \multirow{4}{*}{4} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & $b \neq 0 \land $ & \multirow{4}{*}{*} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b \neq 0 \land a < b$ & \\ \hline
+
+    \multirow{4}{*}{5} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{0} & $b == 0 \land $ & \multirow{4}{*}{0} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= b == 0 \land a > b + 1$ & \\ \hline
+
+    \multirow{4}{*}{6} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & \multirow{4}{*}{1} & $b == 0 \land $ & \multirow{4}{*}{*} \\
+    & & & & $\land a \ge b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b == 0 \land b \le a \le b + 1$ & \\ \hline
+
+    \multirow{4}{*}{7} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & $b == 0 \land $ & \multirow{4}{*}{Chosen: 1} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a > b + 1 =$ & \\
+    & & & & $= false$ & \\ \hline
+
+    \multirow{4}{*}{8} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & $b == 0 \land $ & \multirow{4}{*}{1} \\
+    & & & & $\land a < b \land$ & \\
+    & & & & $\land a \le b + 1 =$ & \\
+    & & & & $= b == 0 \land a < b$ & \\ \hline
+  \end{tabular}
+  \caption{All combinations of $p$, $q$ and $r$ used for pre condition $r'$}
+  \label{tab:predicate_r}
+\end{table}
+
+Using the results of tables \ref{tab:predicate_p}, \ref{tab:predicate_q} and \ref{tab:predicate_r} these assumptions can be made:
+
+\begin{equation}
+\begin{array}{rl}
+p &= p ? 1 : 0\\
+q &= p ? (q \&\& r ? * : 0) : *\\
+r &= p ? (q ? 1 : (r ? * : 0)) : *\\
+\end{array}
+\end{equation}
