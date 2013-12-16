@@ -118,7 +118,7 @@ Similar to table \ref{tab:predicate_p} all combinations of $p$, $q$ and $r$ have
     & & & & $\land a \le b + 1 =$ & \\
     & & & & $= b == 0 \land b \le a \le b + 1$ & \\ \hline
 
-    \multirow{4}{*}{7} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & $b == 0 \land $ & \multirow{4}{*}{Chosen: 0} \\
+    \multirow{4}{*}{7} & \multirow{4}{*}{1} & \multirow{4}{*}{1} & \multirow{4}{*}{0} & $b == 0 \land $ & \multirow{4}{*}{Chosen: *} \\
     & & & & $\land a < b \land$ & \\
     & & & & $\land a > b + 1 =$ & \\
     & & & & $= false$ & \\ \hline
@@ -199,7 +199,7 @@ Using the results of tables \ref{tab:predicate_p}, \ref{tab:predicate_q} and \re
 \begin{equation}
 \begin{array}{rl}
 p &= p ? 1 : 0\\
-q &= p ? (q \&\& r ? * : 0) : *\\
+q &= p ? (q ? * : 0) : *\\
 r &= p ? (q ? 1 : (r ? * : 0)) : *\\
 \end{array}
 \end{equation}
